@@ -89,12 +89,17 @@ class MainAlarmViewController: UITableViewController{
         sw.tag = indexPath.row
         sw.addTarget(self, action: #selector(MainAlarmViewController.switchTapped(_:)), for: UIControl.Event.valueChanged)
         if alarm.enabled {
-            cell!.backgroundColor = UIColor.white
+            cell!.backgroundColor = UIColor.groupTableViewBackground
             cell!.textLabel?.alpha = 1.0
             cell!.detailTextLabel?.alpha = 1.0
             sw.setOn(true, animated: false)
         } else {
-            cell!.backgroundColor = UIColor.groupTableViewBackground
+            if #available(iOS 13.0, *) {
+                cell!.backgroundColor = UIColor.systemGroupedBackground
+            } else {
+                cell!.backgroundColor = UIColor.groupTableViewBackground
+                // Fallback on earlier versions
+            }
             cell!.textLabel?.alpha = 0.5
             cell!.detailTextLabel?.alpha = 0.5
         }
